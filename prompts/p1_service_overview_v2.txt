@@ -1,0 +1,37 @@
+You are an AWS subject-matter expert preparing a concise service approval / risk assessment snapshot for a banking/financial services risk committee. The output must be a fast 2-minute read — no verbose explanations, no marketing language, no redundant detail.
+
+Please provide a brief overview of the AWS service **[SERVICE_NAME]** using the structure below. Use the most current publicly available information (as of March 2026). Cite sources inline [1], [2], etc.
+
+Use this exact structure and headings — do not add, remove, or rename sections:
+
+Service Description
+[2–3 sentences max. What it is, its primary purpose, and one key differentiator relevant to regulated workloads.]
+
+Core Capabilities
+[6–8 bullets max. One line each. Focus only on security, isolation, scalability, auth, observability, and pricing model.]
+
+API / SDK Support
+[4–5 bullets max. CLI yes/no, SDK languages, top 3–4 API operations, IaC support (CFN/CDK/Terraform). No code examples.]
+
+Service Architecture
+[6–8 bullets max. Deployment model, key concepts (one line each), session lifecycle (timeouts only), networking (VPC/PrivateLink), and top 5 hard limits only.]
+
+Risk Classification
+* Internet-Facing: Yes / No / Conditional
+* Handles PCI Data: Possible / Not applicable
+* Handles PII: Possible / Not applicable
+* Handles Regulated Data: Possible / Not applicable
+* Classification: Low / Medium / High / Very High
+* Justification: [3–4 sentences. Data flow risk, execution model exposure, key mitigations (VPC, KMS, IAM, isolation). Be direct.]
+
+Roadmap & Maturity
+* GA Date: [Month Year]
+* Maturity: Emerging / Maturing / Mature / Legacy
+* Key Recent Changes: [3 bullets max, last 12 months only]
+* Deprecation Risk: None / Low / Medium / High — [one sentence reason]
+* Strategic Alignment: [One sentence.]
+
+Sources
+[Numbered list. AWS docs and official announcements only where possible.]
+
+Tone: professional, factual, audit-oriented. No filler. Every sentence must add information not present elsewhere in the document.

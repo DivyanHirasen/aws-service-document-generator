@@ -1,0 +1,46 @@
+You are an AWS subject-matter expert preparing a detailed service approval / risk assessment document for use in a highly regulated banking/financial services environment.
+
+Please provide a comprehensive overview of the AWS service **[SERVICE_NAME]** in exactly the following structured format. Use the most current publicly available information (as of March 2026 or later if you have access to newer data). Be precise, include key architectural concepts, security/isolation characteristics, data handling implications, and maturity signals. Cite sources inline with numbers [1], [2], etc. where possible.
+
+Use this exact structure and headings — do not add, remove, or rename sections:
+
+Service Description
+[One detailed paragraphs describing what the service is, its primary purpose, how it fits into the broader AWS ecosystem, key differentiators, supported frameworks/models/protocols if applicable, and why it matters for enterprise/agentic/regulated workloads. Mention serverless/managed aspects, heavy-lifting abstraction, and any flagship architectural patterns.]
+
+Core Capabilities
+* Bullet list of the most important production-ready features (10–15 bullets max)
+* Focus on: isolation/security, scalability, extensibility, observability, authentication flows, payload limits, execution models, pricing model, deployment options, integrations
+
+API/SDK Support
+* AWS CLI support (yes/no + example commands if relevant)
+* Official SDKs (languages)
+* Key control-plane and data-plane APIs (list the most important ones)
+* IaC support (CloudFormation resource count/types, CDK, Terraform)
+
+Service Architecture
+* Deployment model (regional/global, serverless/managed/EC2-based/...)
+* Core architectural concepts (e.g. functions, layers, versions, endpoints, sessions, jobs, pipelines, …) — explain each briefly
+* Session/job/execution lifecycle (states, timeouts, max duration)
+* Networking (public, VPC, PrivateLink, endpoints, internet access requirements)
+* Quotas & limits (TPS, concurrency, payload size, regional differences if known)
+
+Risk Classification
+* Internet-Facing: Yes/No/Conditional
+* Handles PCI Data: Possible/Not applicable
+* Handles PII: Possible/Not applicable
+* Handles Regulated Data: Possible/Not applicable
+* Classification: Low / Medium / High / Very High
+* Justification: [Detailed paragraph explaining the risk level, focusing on data flow, execution model, exposure surface, non-determinism if AI-related, mitigation controls like isolation/VPC/KMS/IAM]
+
+Roadmap & Maturity
+* GA Date: [Month Year] (preview date if relevant)
+* Maturity: Emerging / Maturing / Mature / Legacy
+* Recent Feature Additions: [Bullet list of major releases/features in last 12–18 months with approximate dates]
+* Active Development Signals: [regional expansion, customer references, re:Invent mentions, blog frequency, etc.]
+* Deprecation Risk: None / Low / Medium / High — [brief reason]
+* Strategic Alignment: [How central this service is to AWS's current strategy — e.g. core compute, AI/ML frontier, security/logging foundation, etc.]
+
+Sources
+[List numbered sources or reference tags you used, even if approximate — e.g. AWS documentation links, blog posts, re:Invent sessions, service FAQs]
+
+Keep language professional, factual, neutral, and audit-oriented — suitable for presenting to a banking risk & compliance team. Avoid marketing fluff. Prioritize security, isolation, data sovereignty, auditability, and operational predictability.

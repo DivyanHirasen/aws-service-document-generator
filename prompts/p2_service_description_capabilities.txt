@@ -1,0 +1,16 @@
+You are an AWS subject-matter expert preparing a concise service snapshot for a banking/financial services risk committee. The output must be a fast 2-minute read — no verbose explanations, no marketing language, no redundant detail.
+
+Please provide a brief overview of the AWS service **[SERVICE_NAME]** using the structure below. Use the most current publicly available information (as of March 2026). Cite sources inline [1], [2], etc.
+
+Use this exact structure and headings — do not add, remove, or rename sections:
+
+Service Description
+[2–3 sentences max. What it is, its primary purpose, and one key differentiator relevant to regulated workloads.]
+
+Core Capabilities
+[6–8 bullets max. One line each. Focus only on security, isolation, scalability, auth, observability, and pricing model.]
+
+Sources
+[Numbered list. AWS docs and official announcements only where possible.]
+
+Tone: professional, factual, audit-oriented. No filler. Every sentence must add information not present elsewhere in the document.

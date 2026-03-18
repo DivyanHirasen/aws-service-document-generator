@@ -1,0 +1,99 @@
+You are an AWS subject-matter expert and cloud security architect preparing a security assessment document for a highly regulated, risk-sensitive enterprise operating under strict compliance, data sovereignty, and operational control requirements. Your audience is a Cloud Security Review Board — technical, risk-aware, and time-constrained. Be precise, factual, and audit-oriented. No marketing language. No filler. Assume the organisation enforces least-privilege access, requires encryption at rest and in transit for all workloads, mandates auditability of all API activity, and restricts data to approved regions only. Flag every shared responsibility boundary explicitly.
+
+Please provide a security-focused assessment of the AWS service **[SERVICE_NAME]** using the structure below. Use the most current publicly available information (as of March 2026). Cite sources inline [1], [2], etc.
+
+Use this exact structure and headings — do not add, remove, or rename sections:
+
+---
+
+## 1. Service Overview
+[2–3 sentences. What the service does, its deployment model (managed/serverless/etc.), and one key security or architectural characteristic relevant to regulated workloads.]
+
+---
+
+## 2. Underlying Infrastructure & Service Substrate
+This section answers the question most commonly raised during approvals: what is this service actually running on, and where does the data physically live?
+
+Cover the following in concise bullet points:
+- Compute substrate: what is the actual execution environment (e.g. EC2, Fargate, Lambda, Firecracker microVM, managed container, proprietary hardware)? Is it shared or dedicated per customer/session/account?
+- Storage substrate: where is data physically persisted (e.g. S3, DynamoDB, Aurora, managed vector store, in-memory only)? Is this AWS-managed storage the customer cannot directly access?
+- AWS account boundary: does the service run inside the customer's AWS account, inside an AWS-managed service account, or both? What crosses the account boundary?
+- VPC boundary: is the compute or storage bound by the customer's VPC, or does it run outside it? If VPC connectivity is available, what does it cover (compute only, storage only, both)?
+- Multi-tenancy model: is the underlying infrastructure shared across customers (noisy neighbour risk), or is isolation enforced at the hardware/VM/container level? Name the isolation mechanism.
+- Data residency: in which AWS region(s) does data at rest reside by default? Is cross-region replication or inference possible, and is it opt-in or automatic?
+
+---
+
+## 3. AWS Enabled Platform Controls
+
+### 3a. Control Mapping
+Map the service's available controls to the four categories below. Present as a table with columns: Control Type | Control | Description. Include 2–3 controls per type where applicable. Be specific — name the actual AWS feature or mechanism, not generic advice.
+
+Control type definitions:
+- Detective: designed to detect, log, and alert after an event has occurred
+- Proactive: designed to prevent the creation of noncompliant resources
+- Preventative: designed to prevent an event from occurring
+- Responsive: designed to drive remediation of adverse events or deviations from baseline configurations
+
+### 3b. Service Control Policy (SCP)
+Produce a single, ready-to-apply AWS Organizations SCP JSON for **[SERVICE_NAME]** that enforces the minimum security baseline appropriate for a strictly controlled enterprise environment. The SCP should be opinionated and production-ready as a starting point — it will be attached at the AWS Organizations OU level.
+
+The SCP must enforce as many of the following as are applicable to this service:
+- Deny use of the service outside approved AWS regions (use a placeholder list: `["us-east-1", "eu-west-1"]` — reviewer will substitute their approved regions)
+- Deny any service actions if encryption is not using a customer-managed KMS key (CMK), where the service supports CMK enforcement via condition keys
+- Deny disabling, deleting, or modifying audit/logging configurations for the service
+- Deny creation of resources that expose data publicly (e.g. public endpoints, public S3 buckets, open security groups) where applicable
+- Deny actions that would allow cross-account or cross-region data movement outside approved boundaries, where applicable
+- Include a condition to exempt break-glass / admin roles from the deny rules using a placeholder: `"ArnNotLike": {"aws:PrincipalArn": "arn:aws:iam::*:role/BreakGlassAdmin"}`
+
+Format: valid JSON. Add an inline comment above each Statement block (as a `"Sid"` description) explaining what it enforces. After the JSON block, add a short bullet list of any service-specific limitations — cases where the SCP cannot enforce a control and why, so the reviewer knows what must be handled at the IAM policy or application layer instead.
+
+---
+
+## 4. AWS Identity & Access Management (IAM)
+Cover the following in concise bullet points or a table:
+- All IAM roles and managed policies required for the service to function (name them explicitly)
+- The purpose of each role (deployment, data access, execution, monitoring, etc.)
+- Trust relationships — which principal or service can assume each role
+- Any service-linked roles created automatically
+- Least-privilege guidance specific to this service for production environments
+
+---
+
+## 5. Data Protection
+
+**Encryption at Rest:**
+[What is encrypted, default key type (AWS-managed vs CMK), whether CMK is supported, any conditions or IAM requirements for CMK use, and any data the customer cannot encrypt or access directly.]
+
+**Encryption in Transit:**
+[Protocol and minimum TLS version, any internal AWS-to-AWS data paths, FIPS endpoint availability, and any cross-region data movement to flag for data residency.]
+
+---
+
+## 6. Network Security
+Cover the following in concise bullet points:
+- Whether the service runs inside or outside a customer VPC
+- VPC connectivity options (if any) and how they are configured
+- PrivateLink support (control plane and/or data plane)
+- Internet access requirements (inbound and outbound)
+- Any network controls that do NOT apply (e.g. security groups, NACLs) and why
+- Data residency or cross-region network considerations
+
+---
+
+## 7. Logging and Monitoring
+
+**CloudTrail:** [Which API calls are logged (management events vs data events), and any gaps in coverage.]
+
+**VPC Flow Logs:** [Applicability — does the service create ENIs in the customer VPC? If not, state clearly and explain what network visibility is available instead.]
+
+**Compliance:** [Compliance programmes the service is in scope for (SOC, PCI DSS, ISO, HIPAA, FedRAMP, etc.). Note any customer responsibilities for compliance that are not handled by AWS.]
+
+---
+
+## Sources
+[Numbered list. AWS official documentation and announcements only where possible.]
+
+---
+
+Tone: professional, direct, audit-ready. Every bullet must state a fact. Flag shared responsibility boundaries explicitly where relevant. Where a control or protection is the customer's responsibility and not enforced by AWS, say so plainly.
